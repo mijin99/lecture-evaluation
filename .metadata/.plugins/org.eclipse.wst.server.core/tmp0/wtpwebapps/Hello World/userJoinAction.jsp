@@ -1,0 +1,55 @@
+<!-- language 언어 java
+     contentType 무슨 컨텐츠냐 text/html , charset 캐릭터셋이 뭐냐 UTF-8
+     pageEncoding 인코딩은 뭘로 할거냐 UTF-8로 할거다 
+     
+     %@는 페이지 지시어 
+     %= 출력
+     %! 메소드나 전역변수 선언문
+     % jsp 영역. 지역변수
+       -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding ="UTF-8" %>
+<%@ page import ="user.userDTO" %>
+<%@ page import ="user.userDAO" %>
+<%@ page import ="java.io.PrintWriter" %>
+
+<% //JSP 영역 ! 
+	//한글로 된 값을 받으려면 이걸 설정해 줘야한다.
+	request.setCharacterEncoding("UTF-8");
+	//id와 password를 초기화 해놓고 
+	String userID = null;
+	String userPassword =null;
+	 //submit으로 전달받은 userID란 이름의 데이터가 null이 아니면
+	if(request.getParameter("userID")!= null){
+		//userID에 받은 데이터를 넣어준다.
+		userID = (String)request.getParameter("userID");
+	}
+	 
+	if(request.getParameter("userPassword")!= null){
+		//userID에 받은 데이터를 넣어준다.
+		userPassword = (String)request.getParameter("userPassword");
+	}
+	if(userID ==null || userPassword == null){
+		//만약 아이디 비번의 입력이 없다면 , 경고창을 띄워준다.
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('입력이 안 된 사항이 있습니다.');");
+		script.println("history.back();");
+		script.print("</script>");
+		script.close();
+		return;
+	}
+	//실제 db와 연동 
+	userDAO userDAO = new userDAO();
+	//회원가입 실행 경과 담아주기
+	int result = userDAO.join(userID,userPassword);
+	
+	if(result ==1){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('회원가입에 성공했습니다.');");
+		script.println("location.href='index.jsp';");
+		script.print("</script>");
+		script.close();
+		return;
+	}
+%>

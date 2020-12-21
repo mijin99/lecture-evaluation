@@ -1,0 +1,24 @@
+package util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class DatabaseUtil {
+//실질적으로db와 연동
+	
+	public Connection getConnection(){
+		try{
+			//db의 경로를 적어줌
+			String dbURL ="jdbc:mysql://localhost:3306/tutorial";
+			String dbID ="root"; //바로 접속가능하도록
+			String dbPassword ="root";
+			Class.forName("com.mysql.jdbc.Driver");
+			//연결 상태를 반환해줌 
+			return DriverManager.getConnection(dbURL,dbID,dbPassword);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

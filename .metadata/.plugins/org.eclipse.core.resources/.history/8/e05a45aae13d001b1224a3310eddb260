@@ -1,0 +1,24 @@
+<!-- language 언어 java
+     contentType 무슨 컨텐츠냐 text/html , charset 캐릭터셋이 뭐냐 UTF-8
+     pageEncoding 인코딩은 뭘로 할거냐 UTF-8로 할거다 
+     
+     %@는 페이지 지시어 
+     %= 출력
+     %! 메소드나 전역변수 선언문
+     % jsp 영역. 지역변수
+       -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding ="UTF-8" %>
+<%@ page import ="user.userDTO" %>
+<%@ page import ="user.userDAO" %>
+<%@ page import ="java.io.PrintWriter" %>
+
+<% //JSP 영역 ! 
+	//캐릭터 인코딩을 지정해준다. ? 
+	request.setCharacterEncoding("UTF-8");
+	Stirng userID = null;
+	String userPassword =null;
+	if(request.getParameter("userID")!= null){
+		userID = (String)request.getParameter("userID");
+		
+	}
+%>

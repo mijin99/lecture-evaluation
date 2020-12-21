@@ -1,0 +1,6 @@
+package user;
+
+public class userDAO {
+//database access object 직접 접근
+	
+}

@@ -1,0 +1,15 @@
+package util;
+
+import java.sql.Connection;
+
+public class DatabaseUtil {
+//실질적으로db와 연동
+	
+	public Connection getConnection(){
+		try{
+			String dbURL ='jdbc:mysql://'
+		}catch(Excution e){
+			e.printstacktrace();
+		}
+	}
+}
