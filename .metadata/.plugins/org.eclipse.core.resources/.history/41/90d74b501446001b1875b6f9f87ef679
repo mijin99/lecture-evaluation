@@ -1,0 +1,5 @@
+package user;
+
+public class UserDAO {
+	//접근 성공한 데이터 베이스 객체를 이용
+}

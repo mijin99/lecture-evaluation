@@ -1,0 +1,16 @@
+package user;
+
+import com.sun.corba.se.pept.transport.Connection;
+
+public class UserDAO {
+	//접근 성공한 데이터 베이스 객체를 이용
+	public int login(String userID,String userPassword){
+		String SQL ="SELECT userPassword FROM USER WHERE userID= ?";
+		Connection conn =null;
+		try{
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}

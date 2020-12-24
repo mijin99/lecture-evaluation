@@ -1,0 +1,23 @@
+package user;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+
+public class UserDAO {
+	//접근 성공한 데이터 베이스 객체를 이용
+	public int login(String userID,String userPassword){
+		String SQL ="SELECT userPassword FROM USER WHERE userID= ?";
+		Connection conn =null; //연결 값 받기
+		PreparedStatement pstmt = null; //연결 후 sql넣기
+		//sql실행 후 결과 처리
+		ResultSet rs = null;
+		try{
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}
