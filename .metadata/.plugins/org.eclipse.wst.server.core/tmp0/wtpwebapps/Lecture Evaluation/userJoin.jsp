@@ -26,7 +26,7 @@
 		<!-- 버튼 눌러서 나타났다, 사라졌다 하는 부분  #navbar << 이거-->
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href="index.jsp">메인</a>
 				</li>
 				<!-- 누르면 목록나옴 dropdown  -->
@@ -37,7 +37,7 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
 						<a class="dropdown-item" href="userLogin.jsp">로그인</a>
-						<a class="dropdown-item" href="userJoin.jsp">회원가입</a>
+						<a class="dropdown-item active" href="userJoin.jsp">회원가입</a>
 						<a class="dropdown-item" href="userLogout.jsp">로그아웃</a>
 					</div>
 				</li>

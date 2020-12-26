@@ -1,0 +1,16 @@
+package util;
+
+public class SHA256 {
+	//샤 256 이메일인증!
+	
+	public static String getSHA256(String input){
+		StringBuffer result = new StringBuffer();
+		try{
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result.toString();
+	}
+}

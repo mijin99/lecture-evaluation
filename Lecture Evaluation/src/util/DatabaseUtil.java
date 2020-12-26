@@ -9,7 +9,7 @@ public class DatabaseUtil {
 	public static Connection getConnection(){
 		try{
 			//3306포트를 사용하는 tutorial이란 이름의 정보로
-			String dbURL ="jdbc:mysql://localhost:3306/tutorial?serverTimezone=UTC";
+			String dbURL ="jdbc:mysql://localhost:3306/LectureEvaluation?serverTimezone=UTC";
 			String dbID ="root"; //바로 접속가능하도록
 			String dbPassword ="671003"; //비번 설정 로그인
 //			Class.forName("com.mysql.cj.jdbc.Driver");

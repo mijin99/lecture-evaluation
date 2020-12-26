@@ -1,0 +1,19 @@
+package util;
+
+import java.security.MessageDigest;
+
+public class SHA256 {
+	//샤 256 이메일인증!
+	
+	public static String getSHA256(String input){
+		StringBuffer result = new StringBuffer();
+		try{
+			MessageDigest digest = MessageD
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		//해쉬값 반환
+		return result.toString();
+	}
+}

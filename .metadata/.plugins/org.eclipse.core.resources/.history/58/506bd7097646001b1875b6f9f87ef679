@@ -1,0 +1,15 @@
+package util;
+					
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+					//메일 인증을 도와주는 클래스
+public class Gmail extends Authenticator{
+	//gmail smtp 이용(?) jaf , javamail 라이브러리 다운받아옴! lib에 넣어놈
+	
+	@Override
+	protected PasswordAuthentication getPasswordAuthentication(){
+		//인증메일을 발송할 지메일
+		return new PasswordAuthenticaiton("mijinkim92326@gmail.com","ki671003");
+	}
+	
+}

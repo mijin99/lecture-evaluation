@@ -79,7 +79,7 @@ public class UserDAO {
 	
 	//이메일 인증
 	public boolean getUserEmailChecked(String userID){
-		String SQL ="SELECT userEmailChecked FROM USER WHERE useID =?";
+		String SQL ="SELECT userEmailChecked FROM USER WHERE userID =?";
 		Connection conn =null; //연결 값 받기
 		PreparedStatement pstmt = null; //연결 후 sql넣기
 		//sql실행 후 결과 처리
@@ -134,7 +134,7 @@ public class UserDAO {
 	
 	//유저의 이메일 알아오기
 	public String getUserEmail(String userID){
-		String SQL ="SELECT userEmail FROM USER WHERE useID =?";
+		String SQL ="SELECT userEmail FROM USER WHERE userID =?";
 		Connection conn =null; //연결 값 받기
 		PreparedStatement pstmt = null; //연결 후 sql넣기
 		//sql실행 후 결과 처리
