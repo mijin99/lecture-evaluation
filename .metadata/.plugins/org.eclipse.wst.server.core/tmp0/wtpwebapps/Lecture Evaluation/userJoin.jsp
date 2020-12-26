@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> <!--  한글로 -->
+    <%@ page import='java.io.PrintWriter' %>
     <!-- PUBLIC부터 쭉 지움 -> HTML5 사용을 위해  -->
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,23 @@
 	<link rel="stylesheet" href="./css/custom.css">
 </head>
 <body>
+<%
+//로그인에 따른 화면 변경
+	String userID =null;
+	//로그인 정보가 있으면 받기
+	if(session.getAttribute("userID")!=null){
+		userID= (String) session.getAttribute("userID");
+	}
+	if(userID !=null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인이 된 상태입니다.')");
+		script.println("location.href='index.jsp'");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+%>
 	<!--네비게이션  바 (HTML5부터)/부트스트랩이 제공 밝은 하양바-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<!-- 부트스트랩안에서 로고 같은거 출력 -->
@@ -26,7 +44,7 @@
 		<!-- 버튼 눌러서 나타났다, 사라졌다 하는 부분  #navbar << 이거-->
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
+				<li class="nav-item active">
 					<a class="nav-link" href="index.jsp">메인</a>
 				</li>
 				<!-- 누르면 목록나옴 dropdown  -->
@@ -36,9 +54,12 @@
 						회원관리
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
+				<% 	if(userID ==null){ %>
 						<a class="dropdown-item" href="userLogin.jsp">로그인</a>
-						<a class="dropdown-item active" href="userJoin.jsp">회원가입</a>
+						<a class="dropdown-item" href="userJoin.jsp">회원가입</a>
+				<%  }else{ %>
 						<a class="dropdown-item" href="userLogout.jsp">로그아웃</a>
+				<% } %>
 					</div>
 				</li>
 			</ul>
@@ -50,6 +71,7 @@
 			</form>
 		</div>
 	</nav>
+
 
 	<!-- 본문 내용 -->   <!-- 컨테이너 - 반응형 -->
 	<section class="container mt-3" style="max-width:560px;">

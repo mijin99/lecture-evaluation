@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> <!--  한글로 -->
     <!-- PUBLIC부터 쭉 지움 -> HTML5 사용을 위해  -->
+    
+    <!-- 로그인 상태에 따라 보여지는 항목을 바꾸기 위해 -->
+  <%@ page import='java.io.PrintWriter' %>
+  <%@ page import='user.UserDAO' %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +18,34 @@
 	<link rel="stylesheet" href="./css/custom.css">
 </head>
 <body>
+<%
+//로그인에 따른 화면 변경
+	String userID =null;
+	//로그인 정보가 있으면 받기
+	if(session.getAttribute("userID")!=null){
+		userID= (String) session.getAttribute("userID");
+	}
+	if(userID ==null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인을 해주세요.')");
+		script.println("location.href='userLogin.jsp'");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+	//이메일 인증이 안된 사람이 접속하려하면 인증페이지로 
+	boolean emailChecked = new UserDAO().getUserEmailChecked(userID);
+	if(emailChecked ==false){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		//인증이 안된사람이 인증페이지로 
+		script.println("location.href='emailSendConfirm.jsp'");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+%>
 	<!--네비게이션  바 (HTML5부터)/부트스트랩이 제공 밝은 하양바-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<!-- 부트스트랩안에서 로고 같은거 출력 -->
@@ -36,9 +68,12 @@
 						회원관리
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
+				<% 	if(userID ==null){ %>
 						<a class="dropdown-item" href="userLogin.jsp">로그인</a>
 						<a class="dropdown-item" href="userJoin.jsp">회원가입</a>
+				<%  }else{ %>
 						<a class="dropdown-item" href="userLogout.jsp">로그아웃</a>
+				<% } %>
 					</div>
 				</li>
 			</ul>
@@ -253,12 +288,12 @@
 						<!-- 실제 강의 평가 내용 3행 -->
 						<div class="form-group">
 							<label>제목</label>
-							<input type="text" name="evaluationTime" class="form-control" maxlength="30">
+							<input type="text" name="evaluationTitle" class="form-control" maxlength="30">
 						</div>
 						
 						<div class="form-group">
 							<label>내용</label>
-							<textarea  name="evaluationContext" class="form-control" maxlength="2048" style="height:180px;"></textarea>
+							<textarea  name="evaluationContent" class="form-control" maxlength="2048" style="height:180px;"></textarea>
 						</div>
 						
 						<!-- 1개의 행을 여러개로 -->
