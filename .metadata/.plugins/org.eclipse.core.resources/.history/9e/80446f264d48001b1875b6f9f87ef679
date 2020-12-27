@@ -20,19 +20,19 @@ public class EvaluationDAO {
 			ResultSet rs = null;
 			try{
 				conn = DatabaseUtil.getConnection(); //db접근(util에 사전정의 한 것) 모듈화
-				pstmt = conn.prepareStatement(SQL);			//cross site scripting 공격을 방어 하기 위함. (<script> 를 사용한 악의적인 공격)// 라이브러리 많음 . 참고용
-				pstmt.setString(1,evalautionDTO.getUserID().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(2,evalautionDTO.getLectureName().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(3,evalautionDTO.getProfessorName().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1,evalautionDTO.getUserID().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+				pstmt.setString(2,evalautionDTO.getLectureName());
+				pstmt.setString(3,evalautionDTO.getProfessorName());
 				pstmt.setInt(4,evalautionDTO.getLectureYear()); //강의 연도
-				pstmt.setString(5,evalautionDTO.getSemesterDivide().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(6,evalautionDTO.getLectureDivide().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(7,evalautionDTO.getEvaluationTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(8,evalautionDTO.getEvaluationContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(9,evalautionDTO.getTotalScore().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(10,evalautionDTO.getCreditScore().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(11,evalautionDTO.getComfortableScore().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));
-				pstmt.setString(12,evalautionDTO.getLectureScore().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n","<br>"));	
+				pstmt.setString(5,evalautionDTO.getSemesterDivide());
+				pstmt.setString(6,evalautionDTO.getLectureDivide());
+				pstmt.setString(7,evalautionDTO.getEvaluationTitle());
+				pstmt.setString(8,evalautionDTO.getEvaluationContent());
+				pstmt.setString(9,evalautionDTO.getTotalScore());
+				pstmt.setString(10,evalautionDTO.getCreditScore());
+				pstmt.setString(11,evalautionDTO.getComfortableScore());
+				pstmt.setString(12,evalautionDTO.getLectureScore());	
 				return pstmt.executeUpdate();  //1개가 변환되어 1이 반환
 				
 			}catch(Exception e){
