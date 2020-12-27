@@ -164,7 +164,7 @@
 			<!-- 카드 바디부분 -->
 			<div class="card-body">
 				<h5 class="card-title">
-					<%= evaluation.getEvaluationTitle() %>&nbsp;<small><%= evaluation.getLectureYear() %></small>
+					<%= evaluation.getEvaluationTitle() %>&nbsp;<small>(<%=evaluation.getLectureYear() %>년 <%=evaluation.getSemesterDivide() %>)</small>
 				</h5>
 				<p class="card-text"><%= evaluation.getEvaluationContent() %>
 				<div class="row">
@@ -176,8 +176,8 @@
 					</div>
 					<!-- 추천         텍스트 오른쪽 정렬  -->
 					<div class="col-3 text-right">
-						<a onclick="return contirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
-						<a onclick="return contirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
+						<a onclick="return contirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=<%= evaluation.getEvaluationID()%>">추천</a>
+						<a onclick="return contirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=<%= evaluation.getEvaluationID()%>">삭제</a>
 					</div>
 				</div>
 			</div>	
@@ -312,10 +312,10 @@
 							<label>종합</label>
 								<select name="totalScore" class="form-control">
 									<option value="A" selected>A</option>
-									<option value="B" selected>B</option>
-									<option value="C" selected>C</option>
-									<option value="D" selected>D</option>
-									<option value="F" selected>F</option>
+									<option value="B" >B</option>
+									<option value="C" >C</option>
+									<option value="D" >D</option>
+									<option value="F" >F</option>
 								</select>
 							</div>
 							
@@ -323,10 +323,10 @@
 							<label>성적</label>
 								<select name="creditScore" class="form-control">
 									<option value="A" selected>A</option>
-									<option value="B" selected>B</option>
-									<option value="C" selected>C</option>
-									<option value="D" selected>D</option>
-									<option value="F" selected>F</option>
+									<option value="B" >B</option>
+									<option value="C" >C</option>
+									<option value="D" >D</option>
+									<option value="F" >F</option>
 								</select>
 							</div>
 							
@@ -334,10 +334,10 @@
 							<label>널널</label>
 								<select name="comfortableScore" class="form-control">	
 									<option value="A" selected>A</option>
-									<option value="B" selected>B</option>
-									<option value="C" selected>C</option>
-									<option value="D" selected>D</option>
-									<option value="F" selected>F</option>
+									<option value="B" >B</option>
+									<option value="C" >C</option>
+									<option value="D" >D</option>
+									<option value="F" >F</option>
 								</select>
 							</div>
 							
@@ -345,10 +345,10 @@
 							<label>강의</label>
 								<select name="lectureScore" class="form-control">	
 									<option value="A" selected>A</option>
-									<option value="B" selected>B</option>
-									<option value="C" selected>C</option>
-									<option value="D" selected>D</option>
-									<option value="F" selected>F</option>
+									<option value="B" >B</option>
+									<option value="C" >C</option>
+									<option value="D" >D</option>
+									<option value="F" >F</option>
 								</select>
 							</div>
 						</div>

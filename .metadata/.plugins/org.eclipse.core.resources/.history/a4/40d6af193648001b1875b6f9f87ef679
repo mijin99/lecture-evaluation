@@ -1,0 +1,8 @@
+package likey;
+
+public class LikeyDAO {
+	//좋아요 누르는 함수 
+	public int like(String userID,int evaluationID,String userIP){
+		
+	}
+}

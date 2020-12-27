@@ -19,7 +19,7 @@
      Documentation at /docs/config/server.html
  --><Server port="8005" shutdown="SHUTDOWN">
   <!-- Security listener. Documentation at /docs/config/listeners.html
-  <Listener className="org.apache.catalina.security.SecurityListener" />
+  <Listener className="org.apache.catalina.sec\urity.SecurityListener" />
   -->
   <!--APR library loader. Documentation at /docs/apr.html -->
   <Listener SSLEngine="on" className="org.apache.catalina.core.AprLifecycleListener"/>
@@ -124,7 +124,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log." suffix=".txt"/>
 
-      <Context docBase="C:\studysite\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\studysite\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Hello World" path="/Hello_World" reloadable="true" source="org.eclipse.jst.jee.server:Hello World"/><Context docBase="C:\studysite\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Lecture Evaluation" path="/Lecture_Evaluation" reloadable="true" source="org.eclipse.jst.jee.server:Lecture Evaluation"/></Host>
+      <Context docBase="C:\studysite\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\studysite\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Hello World" path="/Hello_World" reloadable="false" source="org.eclipse.jst.jee.server:Hello World"/><Context docBase="C:\studysite\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Lecture Evaluation" path="/Lecture_Evaluation" reloadable="true" source="org.eclipse.jst.jee.server:Lecture Evaluation"/></Host>
     </Engine>
   </Service>
 </Server>
