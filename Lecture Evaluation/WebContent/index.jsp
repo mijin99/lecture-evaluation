@@ -5,6 +5,12 @@
     <!-- 로그인 상태에 따라 보여지는 항목을 바꾸기 위해 -->
   <%@ page import='java.io.PrintWriter' %>
   <%@ page import='user.UserDAO' %>
+  <%@ page import='evaluation.EvaluationDTO' %>
+  <%@ page import='evaluation.EvaluationDAO' %>
+  <%@ page import='java.util.ArrayList' %>
+  <%@ page import='java.net.URLEncoder' %>
+  
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +25,31 @@
 </head>
 <body>
 <%
+//검색게시물
+	request.setCharacterEncoding("UTF-8");
+	String lectureDivide ="전체";
+	String searchType="최신순";
+	String search ="";
+	int pageNumber=0;
+	if(request.getParameter("lectureDivide")!=null){
+		lectureDivide = request.getParameter("lectureDivide");
+	}
+	if(request.getParameter("searchType")!=null){
+		searchType = request.getParameter("searchType");
+	}
+	if(request.getParameter("search")!=null){
+		search = request.getParameter("search");
+	}
+	if(request.getParameter("pageNumber")!=null){
+		try{
+		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		}
+		catch(Exception e){
+			System.out.println("검색페이지 오류");
+		}
+	}
+	
+
 //로그인에 따른 화면 변경
 	String userID =null;
 	//로그인 정보가 있으면 받기
@@ -78,8 +109,8 @@
 				</li>
 			</ul>
 			<!-- 검색창  -->
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="Search">
+			<form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
+				<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="Search">
 					<!-- 전송버튼 -->
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 			</form>
@@ -92,9 +123,13 @@
 			<!-- 강의 구분  -->								<!-- 마진 -->
 			<select name="lectureDivide" class="form-control mx-1 mt-2">
 				<option value="전체">전체</option>
-				<option value="전공">전공</option>
-				<option value="교양">교양</option>
-				<option value="기타">기타</option>
+				<option value="전공" <%if(lectureDivide.equals("전공")) out.println("selected"); %>>전공</option>
+				<option value="교양" <%if(lectureDivide.equals("교양")) out.println("selected"); %>>교양</option>
+				<option value="기타" <%if(lectureDivide.equals("기타")) out.println("selected"); %>>기타</option>
+			</select>
+			<select name="searchType" class="form-control mx-1 mt-2">
+				<option value="최신순" >최신순</option>
+				<option value="추천순" <%if(searchType.equals("추천순")) out.println("selected"); %>>추천순</option>
 			</select>
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요">
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
@@ -102,16 +137,26 @@
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a>
 			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a>
 		</form>
+	<%
+	//사용자가 검색을 한 내용이 리스트레 담겨서 출력
+	ArrayList<EvaluationDTO> evaluationList = new ArrayList<EvaluationDTO>();
+	evaluationList = new EvaluationDAO().getList(lectureDivide,searchType,search,pageNumber);
+	if(evaluationList !=null)
+		for(int i=0;i<evaluationList.size();i++){
+			if(i==5) break;
+			EvaluationDTO evaluation =evaluationList.get(i);
 		
+	
+	%>	
 		
 		<!-- 강의평가 등록했을 때 보이는 모습 카드-->
 		<div class="card bg-light mt-3">
 			<!-- 카드 헤더 -->
 			<div class="card-header bg-light">
 				<div class="row">
-					<div class="col-8 text-left">컴퓨터개론&nbsp;<small>김미진</small></div>
+					<div class="col-8 text-left"><%= evaluation.getLectureName() %>&nbsp;<small><%= evaluation.getProfessorName() %></small></div>
 					<div class="col-4 text-right">
-						종합<span style="color :red;">A</span>
+						종합<span style="color :red;"><%= evaluation.getTotalScore() %></span>
 					</div>
 				</div>
 			</div>
@@ -119,15 +164,15 @@
 			<!-- 카드 바디부분 -->
 			<div class="card-body">
 				<h5 class="card-title">
-					정말 좋은 강의에요.&nbsp;<small>(2017년 가을학기)</small>
+					<%= evaluation.getEvaluationTitle() %>&nbsp;<small><%= evaluation.getLectureYear() %></small>
 				</h5>
-				<p class="card-text">강의나 널널하지만 학점 잘 나오고 좋음. 사바사 있으므로 참고만 바람
+				<p class="card-text"><%= evaluation.getEvaluationContent() %>
 				<div class="row">
 					<div class="col-9 text-left">
-						성적 <span style="color :red;"> A</span>
-						널널 <span style="color :red;"> A</span>
-						강의 <span style="color :red;"> B</span>
-						<span style="color:green;">(추천: 15)</span>
+						성적 <span style="color :red;"> <%= evaluation.getCreditScore()%></span>
+						널널 <span style="color :red;"> <%= evaluation.getComfortableScore() %></span>
+						강의 <span style="color :red;"> <%= evaluation.getLectureScore()%></span>
+						<span style="color:green;">(추천 : <%= evaluation.getLikeCount()%> )</span>
 					</div>
 					<!-- 추천         텍스트 오른쪽 정렬  -->
 					<div class="col-3 text-right">
@@ -137,81 +182,46 @@
 				</div>
 			</div>	
 		</div>
-		
-		
-		<!-- 카드 추가 2 -->
-		<!-- 강의평가 등록했을 때 보이는 모습 카드-->
-		<div class="card bg-light mt-3">
-			<!-- 카드 헤더 -->
-			<div class="card-header bg-light">
-				<div class="row">
-					<div class="col-8 text-left">컴퓨터그래픽스&nbsp;<small>나동빈</small></div>
-					<div class="col-4 text-right">
-						종합<span style="color :red;">A</span>
-					</div>
-				</div>
-			</div>
-			
-			<!-- 카드 바디부분 -->
-			<div class="card-body">
-				<h5 class="card-title">
-					완전 꿀강&nbsp;<small>(2018년 2학기)</small>
-				</h5>
-				<p class="card-text">내용도 재밌고 완전 꿀강임 
-				<div class="row">
-					<div class="col-9 text-left">
-						성적 <span style="color :red;"> A</span>
-						널널 <span style="color :red;"> A</span>
-						강의 <span style="color :red;"> A</span>
-						<span style="color:green;">(추천: 20)</span>
-					</div>
-					<!-- 추천         텍스트 오른쪽 정렬  -->
-					<div class="col-3 text-right">
-						<a onclick="return contirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
-						<a onclick="return contirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
-					</div>
-				</div>
-			</div>	
-		</div>
-		
-		<!-- 카드추가3 -->
-		<!-- 강의평가 등록했을 때 보이는 모습 카드-->
-		<div class="card bg-light mt-3">
-			<!-- 카드 헤더 -->
-			<div class="card-header bg-light">
-				<div class="row">
-					<div class="col-8 text-left">컴퓨터개론&nbsp;<small>김미진</small></div>
-					<div class="col-4 text-right">
-						종합<span style="color :red;">A</span>
-					</div>
-				</div>
-			</div>
-			
-			<!-- 카드 바디부분 -->
-			<div class="card-body">
-				<h5 class="card-title">
-					정말 좋은 강의에요.&nbsp;<small>(2017년 가을학기)</small>
-				</h5>
-				<p class="card-text">강의나 널널하지만 학점 잘 나오고 좋음. 사바사 있으므로 참고만 바람
-				<div class="row">
-					<div class="col-9 text-left">
-						성적 <span style="color :red;"> A</span>
-						널널 <span style="color :red;"> A</span>
-						강의 <span style="color :red;"> B</span>
-						<span style="color:green;">(추천: 15)</span>
-					</div>
-					<!-- 추천         텍스트 오른쪽 정렬  -->
-					<div class="col-3 text-right">
-						<a onclick="return contirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
-						<a onclick="return contirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
-					</div>
-				</div>
-			</div>	
-		</div>
-		
+		<!-- 카드 한개 끝 -->
+	<%
+	}
+	%>
 	</section>
 	
-	
+	<!-- 페이지 네이션  --><!--부트스트랩 웹디자인 프레임워크에서 제공. 여러 개의 페이지가 있는 하나의 구성요소 // 게시판많이 사용 -->
+	<ul class="pagination justify-content-center mt-3">
+		<li class="page-item">
+	<%
+	if(pageNumber <=0){
+		%>
+		<a class="page-link disabled">이전</a>
+		<%
+	}else{
+	%>															<!-- 특정 url이동시엔 인코더 이용 -->
+		<a class="page-link" href="./index.jsp?lectureDivide=<%= URLEncoder.encode(lectureDivide,"UTF-8") %>&searchType=
+		<%= URLEncoder.encode(searchType,"UTF-8") %> &search =<%= URLEncoder.encode(search,"UTF-8") %>&pageNumber =<%=pageNumber -1 %>">이전</a>
+<%		
+	}
+%>	
+		</li>
+		<li>
+		
+		<%
+		//현재 상태에서 6개  -> 다음페이지가 존재. 
+	if(evaluationList.size()<6){
+		%>
+		<a class="page-link disabled">다음</a>
+		<%
+	}else{
+	%>														
+		<a class="page-link" href="./index.jsp?lectureDivide=<%= URLEncoder.encode(lectureDivide,"UTF-8") %>&searchType=
+		<%= URLEncoder.encode(searchType,"UTF-8") %> &search =<%= URLEncoder.encode(search,"UTF-8") %>&pageNumber =<%=pageNumber +1 %>">다음</a>
+<%		
+	}
+%>	
+		</li>
+	</ul>
+
 
 	<!-- 등록하기 모달창 -->
 	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
